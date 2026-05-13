@@ -2,10 +2,8 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useLocale, useTranslations } from 'next-intl'
-import { MapPin, Maximize2, Heart } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Card } from '@/components/ui/card'
+import { useLocale } from 'next-intl'
+import { MapPin, Heart, Maximize2 } from 'lucide-react'
 import type { Listing } from '@/types'
 
 interface ListingCardProps {
@@ -14,25 +12,24 @@ interface ListingCardProps {
   onSave?: (id: string) => void
 }
 
-const RENTAL_TYPE_COLORS: Record<string, string> = {
-  long_term: 'bg-blue-100 text-blue-700',
-  popup: 'bg-amber-100 text-amber-700',
-  marketing: 'bg-emerald-100 text-emerald-700'
+const BADGE_STYLES: Record<string, string> = {
+  long_term: 'bg-forest text-white',
+  popup: 'bg-purple-brand text-white',
+  marketing: 'bg-amber-brand text-white',
 }
 
-const RENTAL_TYPE_LABELS: Record<string, { en: string; es: string }> = {
+const TYPE_LABELS: Record<string, { en: string; es: string }> = {
   long_term: { en: 'Long-term', es: 'Largo plazo' },
   popup: { en: 'Pop-up', es: 'Pop-up' },
-  marketing: { en: 'Marketing', es: 'Marketing' }
+  marketing: { en: 'Marketing', es: 'Marketing' },
 }
 
 export function ListingCard({ listing, isSaved, onSave }: ListingCardProps) {
-  const locale = useLocale()
-  const t = useTranslations('common')
+  const locale = useLocale() as 'en' | 'es'
 
   const primaryImage = listing.images?.[0]
   const primaryPrice = listing.price_monthly
-    ? `€${listing.price_monthly.toLocaleString()}${locale === 'es' ? '/mes' : '/mo'}`
+    ? `€${listing.price_monthly.toLocaleString('es-ES')}${locale === 'es' ? '/mes' : '/mo'}`
     : listing.price_daily_popup
     ? `€${listing.price_daily_popup}${locale === 'es' ? '/día' : '/day'}`
     : listing.price_daily_marketing
@@ -40,81 +37,72 @@ export function ListingCard({ listing, isSaved, onSave }: ListingCardProps) {
     : null
 
   return (
-    <Card className="overflow-hidden group cursor-pointer hover:shadow-lg transition-shadow duration-200 border-zinc-200">
-      <Link href={`/${locale}/listings/${listing.id}`}>
-        {/* Image */}
-        <div className="relative aspect-[4/3] bg-zinc-100 overflow-hidden">
-          {primaryImage ? (
-            <Image
-              src={primaryImage}
-              alt={listing.title}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-16 h-16 rounded-full bg-zinc-200 flex items-center justify-center">
-                <Maximize2 className="h-8 w-8 text-zinc-400" />
-              </div>
-            </div>
-          )}
-
-          {/* Save button */}
-          {onSave && (
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                onSave(listing.id)
-              }}
-              className="absolute top-3 right-3 p-2 rounded-full bg-white/90 hover:bg-white shadow-sm transition-colors"
-            >
-              <Heart
-                className={`h-4 w-4 ${isSaved ? 'fill-red-500 text-red-500' : 'text-zinc-600'}`}
-              />
-            </button>
-          )}
-
-          {/* Rental type badges */}
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1">
-            {listing.rental_types.map((type) => (
-              <span
-                key={type}
-                className={`text-xs font-medium px-2 py-0.5 rounded-full ${RENTAL_TYPE_COLORS[type]}`}
-              >
-                {RENTAL_TYPE_LABELS[type][locale as 'en' | 'es']}
-              </span>
-            ))}
+    <Link href={`/${locale}/listings/${listing.id}`} className="group block">
+      {/* Image container — full bleed, heavy radius */}
+      <div className="relative aspect-[4/3] bg-stone rounded-3xl overflow-hidden mb-3">
+        {primaryImage ? (
+          <Image
+            src={primaryImage}
+            alt={listing.title}
+            fill
+            className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-stone">
+            <Maximize2 className="h-10 w-10 text-ink-subtle" />
           </div>
+        )}
+
+        {/* Rental type badges — floating top-left */}
+        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+          {listing.rental_types.map((type) => (
+            <span
+              key={type}
+              className={`text-[11px] font-semibold px-2.5 py-1 rounded-full ${BADGE_STYLES[type]}`}
+            >
+              {TYPE_LABELS[type][locale]}
+            </span>
+          ))}
         </div>
 
-        {/* Content */}
-        <div className="p-4">
-          {/* Price */}
-          {primaryPrice && (
-            <p className="text-lg font-bold text-zinc-900 mb-1">{primaryPrice}</p>
-          )}
+        {/* Save button — floating top-right */}
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            onSave?.(listing.id)
+          }}
+          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+        >
+          <Heart
+            className={`h-4 w-4 transition-colors ${
+              isSaved ? 'fill-red-500 stroke-red-500' : 'stroke-ink-muted'
+            }`}
+          />
+        </button>
+      </div>
 
-          {/* Title */}
-          <h3 className="text-sm font-medium text-zinc-900 line-clamp-2 mb-2 leading-snug">
+      {/* Card info — below image, no card border */}
+      <div className="px-1">
+        <div className="flex items-start justify-between gap-2 mb-1">
+          <h3 className="text-sm font-semibold text-ink line-clamp-1 leading-snug">
             {listing.title}
           </h3>
-
-          {/* Location */}
-          {listing.shopping_center && (
-            <div className="flex items-center gap-1 text-xs text-zinc-500 mb-2">
-              <MapPin className="h-3 w-3 flex-shrink-0" />
-              <span className="truncate">
-                {listing.shopping_center.name} · {listing.shopping_center.city}
-              </span>
-            </div>
+          {primaryPrice && (
+            <span className="text-sm font-bold text-ink flex-shrink-0">{primaryPrice}</span>
           )}
-
-          {/* Size */}
-          <p className="text-xs text-zinc-400">
-            {listing.size_sqm} m²
-          </p>
         </div>
-      </Link>
-    </Card>
+
+        {listing.shopping_center && (
+          <div className="flex items-center gap-1 text-xs text-ink-muted">
+            <MapPin className="h-3 w-3 flex-shrink-0" />
+            <span className="truncate">
+              {listing.shopping_center.name} · {listing.shopping_center.city}
+            </span>
+          </div>
+        )}
+
+        <p className="text-xs text-ink-subtle mt-1">{listing.size_sqm} m²</p>
+      </div>
+    </Link>
   )
 }

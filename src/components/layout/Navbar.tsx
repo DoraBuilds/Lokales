@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
 import { usePathname, useRouter } from 'next/navigation'
-import { Building2, Globe, Menu } from 'lucide-react'
+import { Globe, Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { LinkButton } from '@/components/ui/link-button'
 import {
@@ -33,62 +33,55 @@ export function Navbar({ user }: NavbarProps) {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-zinc-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-50 w-full border-b border-warm-border bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
+
           {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center gap-2 font-bold text-xl text-blue-600">
-            <Building2 className="h-6 w-6" />
-            <span>ShopSpace</span>
+          <Link href={`/${locale}`} className="flex items-center gap-2">
+            <span className="text-xl font-bold tracking-tight text-forest">Lokales</span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8">
             <Link
               href={`/${locale}/search`}
-              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+              className="text-sm font-medium text-ink-muted hover:text-ink transition-colors"
             >
               {t('search')}
             </Link>
             <Link
               href={`/${locale}/listings/new`}
-              className="text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors"
+              className="text-sm font-medium text-ink-muted hover:text-ink transition-colors"
             >
               {t('listSpace')}
             </Link>
           </nav>
 
           {/* Right side */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+
             {/* Language switcher */}
             <DropdownMenu>
               <DropdownMenuTrigger
-                render={
-                  <Button variant="ghost" size="sm" className="gap-2 text-zinc-600" />
-                }
+                render={<Button variant="ghost" size="sm" className="gap-1.5 text-ink-muted font-medium" />}
               >
-                <Globe className="h-4 w-4" />
-                <span className="uppercase text-xs font-semibold">{locale}</span>
+                <Globe className="h-3.5 w-3.5" />
+                <span className="uppercase text-xs">{locale}</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => switchLocale('en')}>
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => switchLocale('es')}>
-                  Español
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => switchLocale('en')}>English</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => switchLocale('es')}>Español</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  render={
-                    <Button variant="ghost" size="sm" className="gap-2" />
-                  }
+                  render={<Button variant="ghost" size="sm" className="gap-2 pl-1" />}
                 >
                   <Avatar className="h-7 w-7">
-                    <AvatarFallback className="text-xs bg-blue-100 text-blue-700">
+                    <AvatarFallback className="text-xs bg-forest-light text-forest font-semibold">
                       {user.name.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
@@ -109,10 +102,14 @@ export function Navbar({ user }: NavbarProps) {
               </DropdownMenu>
             ) : (
               <div className="hidden md:flex items-center gap-2">
-                <LinkButton href={`/${locale}/auth/login`} variant="ghost" size="sm">
+                <LinkButton href={`/${locale}/auth/login`} variant="ghost" size="sm" className="text-ink font-medium">
                   {t('login')}
                 </LinkButton>
-                <LinkButton href={`/${locale}/auth/signup`} size="sm" className="bg-blue-600 hover:bg-blue-700 text-white">
+                <LinkButton
+                  href={`/${locale}/auth/signup`}
+                  size="sm"
+                  className="bg-forest hover:bg-forest-mid text-white font-semibold rounded-full px-5"
+                >
                   {t('signup')}
                 </LinkButton>
               </div>
@@ -121,35 +118,33 @@ export function Navbar({ user }: NavbarProps) {
             {/* Mobile menu */}
             <Sheet>
               <SheetTrigger
-                render={
-                  <Button variant="ghost" size="sm" className="md:hidden" />
-                }
+                render={<Button variant="ghost" size="sm" className="md:hidden" />}
               >
                 <Menu className="h-5 w-5" />
               </SheetTrigger>
-              <SheetContent side="right" className="w-72">
-                <div className="flex flex-col gap-4 mt-8">
-                  <Link href={`/${locale}/search`} className="text-base font-medium py-2 border-b border-zinc-100">
+              <SheetContent side="right" className="w-72 bg-cream">
+                <div className="flex flex-col gap-1 mt-10 px-2">
+                  <Link href={`/${locale}/search`} className="text-base font-medium py-3 px-3 rounded-xl hover:bg-stone transition-colors">
                     {t('search')}
                   </Link>
-                  <Link href={`/${locale}/listings/new`} className="text-base font-medium py-2 border-b border-zinc-100">
+                  <Link href={`/${locale}/listings/new`} className="text-base font-medium py-3 px-3 rounded-xl hover:bg-stone transition-colors">
                     {t('listSpace')}
                   </Link>
                   {user ? (
                     <>
-                      <Link href={`/${locale}/dashboard`} className="text-base font-medium py-2 border-b border-zinc-100">
+                      <Link href={`/${locale}/dashboard`} className="text-base font-medium py-3 px-3 rounded-xl hover:bg-stone transition-colors">
                         {t('dashboard')}
                       </Link>
-                      <Link href={`/${locale}/auth/logout`} className="text-base font-medium py-2 text-red-600">
+                      <Link href={`/${locale}/auth/logout`} className="text-base font-medium py-3 px-3 rounded-xl text-red-600 hover:bg-red-50 transition-colors">
                         {t('logout')}
                       </Link>
                     </>
                   ) : (
-                    <div className="flex flex-col gap-3 mt-2">
-                      <LinkButton href={`/${locale}/auth/login`} variant="outline">
+                    <div className="flex flex-col gap-3 mt-4 pt-4 border-t border-warm-border">
+                      <LinkButton href={`/${locale}/auth/login`} variant="outline" className="justify-center rounded-full">
                         {t('login')}
                       </LinkButton>
-                      <LinkButton href={`/${locale}/auth/signup`} className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <LinkButton href={`/${locale}/auth/signup`} className="justify-center bg-forest hover:bg-forest-mid text-white rounded-full font-semibold">
                         {t('signup')}
                       </LinkButton>
                     </div>

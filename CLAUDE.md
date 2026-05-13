@@ -25,6 +25,20 @@ ShopSpace is a Zillow-like platform for renting empty retail spaces inside shopp
 - Mapbox GL JS for maps
 - Resend for transactional email
 
+## Design system (never change without Dora's approval)
+- **Font**: Plus Jakarta Sans (`--font-jakarta`)
+- **Background**: `bg-cream` (#FAF8F4) — warm off-white, never pure white
+- **Sections**: alternate with `bg-stone` (#F0EBE1)
+- **Brand/CTAs**: `text-forest` / `bg-forest` (#1B3D2F dark green), hover → `bg-forest-mid`
+- **Long-term badge**: forest green — `bg-forest text-white`
+- **Pop-up badge**: purple — `bg-purple-brand text-white` (#6B21A8)
+- **Marketing badge**: amber — `bg-amber-brand text-white` (#92400E)
+- **Text**: `text-ink` (#1C1917), muted → `text-ink-muted` (#78716C), subtle → `text-ink-subtle` (#A8A29E)
+- **Borders**: `border-warm-border` (#E7E0D5)
+- **Border radius**: heavy — cards use `rounded-3xl`, buttons use `rounded-full`
+- **Cards**: No card border/shadow — full-bleed image, Airbnb-style (image + clean text below)
+- **Vibe**: Warm Mediterranean premium. NOT corporate blue. NOT pure white. NOT sharp corners.
+
 ## Code conventions
 - All new UI text: add to both `src/messages/en.json` and `src/messages/es.json`
 - Components go in `src/components/` organized by feature (layout, listings, map, search)

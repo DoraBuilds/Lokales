@@ -1,0 +1,249 @@
+{
+  "nav": {
+    "search": "Buscar Espacios",
+    "listSpace": "Publicar Espacio",
+    "login": "Iniciar sesión",
+    "signup": "Registrarse",
+    "dashboard": "Panel",
+    "logout": "Cerrar sesión",
+    "savedSpaces": "Espacios guardados"
+  },
+  "home": {
+    "hero": {
+      "title": "Encuentra tu Próximo Espacio Comercial",
+      "subtitle": "Descubre espacios disponibles en centros comerciales de toda España. Alquileres a largo plazo, pop-ups o espacios de marketing — todo en un solo lugar.",
+      "searchPlaceholder": "Busca por ciudad, centro comercial o código postal...",
+      "searchButton": "Buscar"
+    },
+    "rentalTypes": {
+      "title": "Tres Formas de Alquilar",
+      "longTerm": {
+        "title": "Alquiler a Largo Plazo",
+        "desc": "Establece tu marca con una presencia comercial permanente"
+      },
+      "popup": {
+        "title": "Pop-Up y Eventos",
+        "desc": "Espacios a corto plazo desde un solo día hasta varios meses"
+      },
+      "marketing": {
+        "title": "Espacio de Marketing",
+        "desc": "Muestra tu marca en escaparates vacíos de alto tráfico"
+      }
+    },
+    "featured": "Espacios Destacados",
+    "viewAll": "Ver todos los espacios"
+  },
+  "search": {
+    "title": "Espacios Disponibles",
+    "filters": {
+      "title": "Filtros",
+      "rentalType": "Tipo de alquiler",
+      "allTypes": "Todos los tipos",
+      "longTerm": "Alquiler a largo plazo",
+      "popup": "Pop-up / Evento",
+      "marketing": "Espacio de marketing",
+      "city": "Ciudad",
+      "allCities": "Todas las ciudades",
+      "sizeRange": "Tamaño (m²)",
+      "minSize": "Tamaño mínimo",
+      "maxSize": "Tamaño máximo",
+      "priceRange": "Precio máximo (€/mes)",
+      "available": "Disponible desde",
+      "apply": "Aplicar filtros",
+      "clear": "Limpiar"
+    },
+    "results": "{count} espacios encontrados",
+    "noResults": "No se encontraron espacios. Prueba a ajustar los filtros.",
+    "sortBy": "Ordenar por",
+    "newest": "Más recientes",
+    "priceLow": "Precio: menor a mayor",
+    "priceHigh": "Precio: mayor a menor",
+    "largest": "Mayor tamaño primero"
+  },
+  "listing": {
+    "perMonth": "/ mes",
+    "perDay": "/ día",
+    "sqm": "m²",
+    "floor": "Planta",
+    "windows": "Escaparates",
+    "ceilingHeight": "Altura del techo",
+    "frontage": "Fachada",
+    "availableFrom": "Disponible desde",
+    "rentalTypes": "Opciones de alquiler",
+    "longTerm": "Alquiler a largo plazo",
+    "popup": "Pop-up / Evento",
+    "marketing": "Espacio de marketing",
+    "amenities": "Comodidades",
+    "description": "Descripción",
+    "location": "Ubicación",
+    "inquire": "Enviar consulta",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "share": "Compartir",
+    "listedBy": "Publicado por",
+    "contact": "Contactar al propietario",
+    "minDays": "Mínimo",
+    "maxDays": "Máximo",
+    "days": "días"
+  },
+  "inquiry": {
+    "title": "Enviar una Consulta",
+    "subtitle": "El propietario recibirá tu mensaje por email y se pondrá en contacto contigo.",
+    "name": "Tu nombre",
+    "email": "Tu email",
+    "phone": "Número de teléfono (opcional)",
+    "rentalType": "Me interesa",
+    "startDate": "Fecha de inicio deseada",
+    "endDate": "Fecha de fin deseada (opcional)",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuéntale al propietario sobre tu marca y lo que buscas...",
+    "send": "Enviar consulta",
+    "sending": "Enviando...",
+    "success": "¡Consulta enviada! El propietario se pondrá en contacto pronto.",
+    "error": "Algo salió mal. Por favor, inténtalo de nuevo."
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesión en tu cuenta de ShopSpace",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar sesión",
+      "noAccount": "¿No tienes cuenta?",
+      "signupLink": "Regístrate"
+    },
+    "signup": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Únete a ShopSpace para publicar o descubrir espacios comerciales",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "passwordHint": "Al menos 8 caracteres",
+      "companyName": "Nombre de empresa (opcional)",
+      "submit": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "loginLink": "Iniciar sesión",
+      "terms": "Al registrarte, aceptas nuestros Términos de Servicio y Política de Privacidad"
+    }
+  },
+  "dashboard": {
+    "title": "Panel",
+    "myListings": "Mis publicaciones",
+    "savedSpaces": "Espacios guardados",
+    "inquiries": "Consultas",
+    "newListing": "Nueva publicación",
+    "noListings": "Aún no has publicado ningún espacio.",
+    "noSaved": "Aún no has guardado ningún espacio.",
+    "noInquiries": "Aún no hay consultas.",
+    "status": {
+      "active": "Activo",
+      "paused": "Pausado",
+      "rented": "Alquilado"
+    },
+    "edit": "Editar",
+    "pause": "Pausar",
+    "activate": "Activar",
+    "delete": "Eliminar"
+  },
+  "listingForm": {
+    "titleNew": "Publicar un Nuevo Espacio",
+    "titleEdit": "Editar Publicación",
+    "steps": {
+      "center": "Centro Comercial",
+      "space": "Detalles del Espacio",
+      "rental": "Opciones de Alquiler",
+      "photos": "Fotos",
+      "review": "Revisión"
+    },
+    "center": {
+      "heading": "¿Dónde está el espacio?",
+      "existing": "Selecciona un centro comercial existente",
+      "or": "o",
+      "addNew": "Añadir un nuevo centro comercial",
+      "name": "Nombre del centro comercial",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "province": "Provincia",
+      "postalCode": "Código postal",
+      "country": "País",
+      "description": "Descripción (opcional)",
+      "website": "Sitio web (opcional)"
+    },
+    "space": {
+      "heading": "Cuéntanos sobre el espacio",
+      "title": "Título del anuncio",
+      "titlePlaceholder": "p.ej. Local en esquina con grandes escaparates, 85m²",
+      "description": "Descripción",
+      "descriptionPlaceholder": "Describe el espacio, su ubicación dentro del centro, alrededores, tráfico de personas...",
+      "size": "Tamaño (m²)",
+      "floor": "Planta",
+      "ground": "Planta baja",
+      "first": "Primera planta",
+      "second": "Segunda planta",
+      "basement": "Sótano",
+      "other": "Otro",
+      "ceilingHeight": "Altura del techo (m)",
+      "frontage": "Ancho de fachada (m)",
+      "windows": "Número de escaparates / ventanas",
+      "amenities": "Comodidades"
+    },
+    "rental": {
+      "heading": "Opciones de alquiler",
+      "subtitle": "Selecciona qué tipos de alquiler aceptas y establece tus precios.",
+      "longTerm": "Alquiler a largo plazo",
+      "longTermPrice": "Precio mensual (€)",
+      "popup": "Pop-up / Corta duración",
+      "popupPrice": "Precio diario (€)",
+      "marketing": "Espacio de marketing",
+      "marketingPrice": "Precio diario (€)",
+      "minDays": "Duración mínima (días)",
+      "maxDays": "Duración máxima (días)",
+      "availableFrom": "Disponible desde"
+    },
+    "photos": {
+      "heading": "Añade fotos",
+      "subtitle": "Sube hasta 20 fotos. La primera foto será la imagen de portada.",
+      "upload": "Subir fotos",
+      "dragDrop": "Arrastra y suelta fotos aquí, o haz clic para seleccionar",
+      "formats": "JPG, PNG, WebP — máx. 10MB cada una"
+    },
+    "navigation": {
+      "back": "Atrás",
+      "next": "Siguiente",
+      "submit": "Publicar anuncio",
+      "submitting": "Publicando..."
+    }
+  },
+  "amenities": {
+    "parking": "Parking cercano",
+    "loadingDock": "Muelle de carga",
+    "airConditioning": "Aire acondicionado",
+    "heating": "Calefacción",
+    "electricity": "Electricidad incluida",
+    "water": "Agua incluida",
+    "wifi": "WiFi",
+    "security": "Seguridad 24h",
+    "cctv": "CCTV",
+    "toilet": "Aseo privado",
+    "storage": "Trastero",
+    "elevator": "Acceso por ascensor"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Intentar de nuevo",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "viewDetails": "Ver detalles",
+    "learnMore": "Saber más",
+    "seeAll": "Ver todo",
+    "perMonth": "/ mes",
+    "perDay": "/ día"
+  }
+}

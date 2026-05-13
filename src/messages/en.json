@@ -1,0 +1,249 @@
+{
+  "nav": {
+    "search": "Search Spaces",
+    "listSpace": "List a Space",
+    "login": "Log in",
+    "signup": "Sign up",
+    "dashboard": "Dashboard",
+    "logout": "Log out",
+    "savedSpaces": "Saved Spaces"
+  },
+  "home": {
+    "hero": {
+      "title": "Find Your Next Retail Space",
+      "subtitle": "Discover available spaces in shopping centers across Spain. Long-term leases, pop-up events, or marketing placements — all in one place.",
+      "searchPlaceholder": "Search by city, mall name, or postcode...",
+      "searchButton": "Search"
+    },
+    "rentalTypes": {
+      "title": "Three Ways to Rent",
+      "longTerm": {
+        "title": "Long-Term Lease",
+        "desc": "Establish your brand with a permanent retail presence"
+      },
+      "popup": {
+        "title": "Pop-Up & Events",
+        "desc": "Short-term spaces from a single day to several months"
+      },
+      "marketing": {
+        "title": "Marketing Placement",
+        "desc": "Showcase your brand in high-traffic empty shopfronts"
+      }
+    },
+    "featured": "Featured Spaces",
+    "viewAll": "View all spaces"
+  },
+  "search": {
+    "title": "Available Spaces",
+    "filters": {
+      "title": "Filters",
+      "rentalType": "Rental Type",
+      "allTypes": "All types",
+      "longTerm": "Long-term lease",
+      "popup": "Pop-up / Event",
+      "marketing": "Marketing placement",
+      "city": "City",
+      "allCities": "All cities",
+      "sizeRange": "Size (m²)",
+      "minSize": "Min size",
+      "maxSize": "Max size",
+      "priceRange": "Max price (€/month)",
+      "available": "Available from",
+      "apply": "Apply Filters",
+      "clear": "Clear"
+    },
+    "results": "{count} spaces found",
+    "noResults": "No spaces found. Try adjusting your filters.",
+    "sortBy": "Sort by",
+    "newest": "Newest",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "largest": "Largest first"
+  },
+  "listing": {
+    "perMonth": "/ month",
+    "perDay": "/ day",
+    "sqm": "m²",
+    "floor": "Floor",
+    "windows": "Windows",
+    "ceilingHeight": "Ceiling height",
+    "frontage": "Frontage",
+    "availableFrom": "Available from",
+    "rentalTypes": "Rental options",
+    "longTerm": "Long-term lease",
+    "popup": "Pop-up / Event",
+    "marketing": "Marketing placement",
+    "amenities": "Amenities",
+    "description": "Description",
+    "location": "Location",
+    "inquire": "Send Inquiry",
+    "save": "Save",
+    "saved": "Saved",
+    "share": "Share",
+    "listedBy": "Listed by",
+    "contact": "Contact lister",
+    "minDays": "Minimum",
+    "maxDays": "Maximum",
+    "days": "days"
+  },
+  "inquiry": {
+    "title": "Send an Inquiry",
+    "subtitle": "The lister will receive your message by email and get back to you.",
+    "name": "Your name",
+    "email": "Your email",
+    "phone": "Phone number (optional)",
+    "rentalType": "I'm interested in",
+    "startDate": "Desired start date",
+    "endDate": "Desired end date (optional)",
+    "message": "Message",
+    "messagePlaceholder": "Tell the lister about your brand and what you're looking for...",
+    "send": "Send Inquiry",
+    "sending": "Sending...",
+    "success": "Inquiry sent! The lister will be in touch soon.",
+    "error": "Something went wrong. Please try again."
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Log in to your ShopSpace account",
+      "email": "Email address",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Log in",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up"
+    },
+    "signup": {
+      "title": "Create your account",
+      "subtitle": "Join ShopSpace to list or discover retail spaces",
+      "name": "Full name",
+      "email": "Email address",
+      "password": "Password",
+      "passwordHint": "At least 8 characters",
+      "companyName": "Company name (optional)",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "terms": "By signing up, you agree to our Terms of Service and Privacy Policy"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "myListings": "My Listings",
+    "savedSpaces": "Saved Spaces",
+    "inquiries": "Inquiries",
+    "newListing": "New Listing",
+    "noListings": "You haven't listed any spaces yet.",
+    "noSaved": "You haven't saved any spaces yet.",
+    "noInquiries": "No inquiries yet.",
+    "status": {
+      "active": "Active",
+      "paused": "Paused",
+      "rented": "Rented"
+    },
+    "edit": "Edit",
+    "pause": "Pause",
+    "activate": "Activate",
+    "delete": "Delete"
+  },
+  "listingForm": {
+    "titleNew": "List a New Space",
+    "titleEdit": "Edit Listing",
+    "steps": {
+      "center": "Shopping Center",
+      "space": "Space Details",
+      "rental": "Rental Options",
+      "photos": "Photos",
+      "review": "Review"
+    },
+    "center": {
+      "heading": "Where is the space?",
+      "existing": "Select an existing shopping center",
+      "or": "or",
+      "addNew": "Add a new shopping center",
+      "name": "Shopping center name",
+      "address": "Street address",
+      "city": "City",
+      "province": "Province",
+      "postalCode": "Postal code",
+      "country": "Country",
+      "description": "Description (optional)",
+      "website": "Website (optional)"
+    },
+    "space": {
+      "heading": "Tell us about the space",
+      "title": "Listing title",
+      "titlePlaceholder": "e.g. Corner unit with large windows, 85m²",
+      "description": "Description",
+      "descriptionPlaceholder": "Describe the space, its location within the mall, surroundings, foot traffic...",
+      "size": "Size (m²)",
+      "floor": "Floor level",
+      "ground": "Ground floor",
+      "first": "First floor",
+      "second": "Second floor",
+      "basement": "Basement",
+      "other": "Other",
+      "ceilingHeight": "Ceiling height (m)",
+      "frontage": "Frontage width (m)",
+      "windows": "Number of windows / display windows",
+      "amenities": "Amenities"
+    },
+    "rental": {
+      "heading": "Rental options",
+      "subtitle": "Select which types of rental you accept and set your prices.",
+      "longTerm": "Long-term lease",
+      "longTermPrice": "Monthly price (€)",
+      "popup": "Pop-up / Short-term",
+      "popupPrice": "Daily price (€)",
+      "marketing": "Marketing placement",
+      "marketingPrice": "Daily price (€)",
+      "minDays": "Minimum rental duration (days)",
+      "maxDays": "Maximum rental duration (days)",
+      "availableFrom": "Available from"
+    },
+    "photos": {
+      "heading": "Add photos",
+      "subtitle": "Upload up to 20 photos. The first photo will be the cover image.",
+      "upload": "Upload photos",
+      "dragDrop": "Drag and drop photos here, or click to select",
+      "formats": "JPG, PNG, WebP — max 10MB each"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "submit": "Publish listing",
+      "submitting": "Publishing..."
+    }
+  },
+  "amenities": {
+    "parking": "Parking nearby",
+    "loadingDock": "Loading dock",
+    "airConditioning": "Air conditioning",
+    "heating": "Heating",
+    "electricity": "Electricity included",
+    "water": "Water included",
+    "wifi": "WiFi",
+    "security": "24h security",
+    "cctv": "CCTV",
+    "toilet": "Private toilet",
+    "storage": "Storage room",
+    "elevator": "Elevator access"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "viewDetails": "View details",
+    "learnMore": "Learn more",
+    "seeAll": "See all",
+    "perMonth": "/ month",
+    "perDay": "/ day"
+  }
+}

@@ -1,7 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Search, ArrowRight, Building2, Calendar, Megaphone, MapPin } from 'lucide-react'
-import { Navbar } from '@/components/layout/Navbar'
+import { NavbarServer } from '@/components/layout/NavbarServer'
 import { Footer } from '@/components/layout/Footer'
 import { LinkButton } from '@/components/ui/link-button'
 
@@ -20,7 +20,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
   return (
     <div className="flex flex-col min-h-screen bg-cream">
-      <Navbar />
+      <NavbarServer />
 
       {/* ── Hero ── */}
       <section className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">

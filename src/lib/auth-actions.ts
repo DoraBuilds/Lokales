@@ -27,7 +27,7 @@ export async function signup(formData: FormData) {
   const locale      = (formData.get('locale')      as string) || 'en'
 
   const supabase = await createClient()
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -37,6 +37,11 @@ export async function signup(formData: FormData) {
 
   if (error) {
     redirect(`/${locale}/auth/signup?error=${encodeURIComponent(error.message)}`)
+  }
+
+  // If email confirmation is enabled, session will be null — send to check-email page
+  if (!data.session) {
+    redirect(`/${locale}/auth/check-email?email=${encodeURIComponent(email)}`)
   }
 
   redirect(`/${locale}/dashboard`)

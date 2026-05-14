@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 
 export async function login(formData: FormData) {
@@ -30,18 +31,24 @@ export async function signup(formData: FormData) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: {
-      data: { name, company_name: companyName || null },
-    },
+    options: { data: { name, company_name: companyName || null } },
   })
 
   if (error) {
     redirect(`/${locale}/auth/signup?error=${encodeURIComponent(error.message)}`)
   }
 
-  // If email confirmation is enabled, session will be null — send to check-email page
-  if (!data.session) {
-    redirect(`/${locale}/auth/check-email?email=${encodeURIComponent(email)}`)
+  // If Supabase requires email confirmation, auto-confirm via admin client
+  // so users never need to check their inbox
+  if (!data.session && data.user) {
+    const admin = createAdminClient()
+    await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true })
+
+    // Now sign them in directly
+    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password })
+    if (loginError) {
+      redirect(`/${locale}/auth/login?error=${encodeURIComponent(loginError.message)}`)
+    }
   }
 
   redirect(`/${locale}/dashboard`)

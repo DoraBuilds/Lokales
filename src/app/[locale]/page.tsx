@@ -23,27 +23,23 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <NavbarServer />
 
       {/* ── Hero ── */}
-      <section className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+      <section className="pt-10 pb-6 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-forest-light text-forest text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">
-            {isEs ? 'España · Próximamente Europa' : 'Spain · Coming to Europe'}
-          </div>
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-ink leading-[1.05] tracking-tight mb-5">
-            {isEs ? (
-              <>El espacio para<br /><span className="text-forest">tu marca.</span></>
-            ) : (
-              <>The space for<br /><span className="text-forest">your brand.</span></>
-            )}
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-ink leading-tight tracking-tight mb-4">
+            {isEs
+              ? <>Encuentra tu espacio<br /><span className="text-forest">perfecto.</span></>
+              : <>Find your perfect<br /><span className="text-forest">space.</span></>
+            }
           </h1>
-          <p className="text-lg text-ink-muted max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-base text-ink-muted max-w-xl mx-auto mb-7 leading-relaxed">
             {t('hero.subtitle')}
           </p>
 
-          {/* Airbnb-style unified search bar */}
+          {/* Search bar */}
           <form
             action={`/${locale}/search`}
             method="GET"
-            className="flex flex-col sm:flex-row items-stretch sm:items-center bg-white rounded-2xl sm:rounded-full shadow-lg border border-warm-border overflow-hidden max-w-2xl mx-auto"
+            className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full shadow-md border border-warm-border overflow-hidden max-w-2xl mx-auto"
           >
             <div className="flex-1 flex items-center gap-3 px-5 py-3.5 sm:border-r border-warm-border">
               <MapPin className="h-4 w-4 text-ink-subtle flex-shrink-0" />
@@ -78,7 +74,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
 
             <button
               type="submit"
-              className="flex items-center justify-center gap-2 bg-forest hover:bg-forest-mid text-white font-semibold text-sm px-7 py-4 sm:py-0 sm:m-1.5 sm:rounded-full transition-colors flex-shrink-0"
+              className="flex items-center justify-center gap-2 bg-forest hover:bg-forest-mid text-white font-semibold text-sm px-8 py-4 transition-colors flex-shrink-0"
             >
               <Search className="h-4 w-4" />
               {t('hero.searchButton')}
@@ -86,7 +82,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           </form>
 
           {/* Quick city links */}
-          <div className="flex flex-wrap justify-center gap-2 mt-5">
+          <div className="flex flex-wrap justify-center gap-2 mt-4">
             {['Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Málaga'].map((city) => (
               <Link
                 key={city}
@@ -101,7 +97,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ── Three rental types ── */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <p className="text-xs font-semibold uppercase tracking-widest text-ink-subtle text-center mb-3">
             {isEs ? 'Cómo funciona' : 'How it works'}

@@ -1,15 +1,146 @@
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Search, ArrowRight, Building2, Calendar, Megaphone, MapPin } from 'lucide-react'
 import { NavbarServer } from '@/components/layout/NavbarServer'
 import { Footer } from '@/components/layout/Footer'
 import { LinkButton } from '@/components/ui/link-button'
+import { ListingCard } from '@/components/listings/ListingCard'
+import type { Listing } from '@/types'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'home' })
   return { title: `Lokales — ${t('hero.title')}` }
 }
+
+const MOCK_LISTINGS: Listing[] = [
+  {
+    id: 'mock-1',
+    shopping_center_id: 'sc-1',
+    lister_id: 'user-1',
+    title: 'Espacio Premium — Planta Baja',
+    description: 'Espacio diáfano de gran visibilidad en la planta principal del centro.',
+    size_sqm: 120,
+    floor_level: 'ground',
+    rental_types: ['long_term'],
+    price_monthly: 4500,
+    available_from: '2026-06-01',
+    status: 'active',
+    images: ['/Assets/1.jpg'],
+    amenities: ['electricity', 'wifi', 'airConditioning', 'security'],
+    created_at: '2026-05-01T00:00:00Z',
+    updated_at: '2026-05-01T00:00:00Z',
+    shopping_center: {
+      id: 'sc-1',
+      name: 'El Corte Inglés Castellana',
+      city: 'Madrid',
+      address: 'Paseo de la Castellana, 79',
+      province: 'Madrid',
+      postal_code: '28046',
+      country: 'ES',
+      lat: 40.4378,
+      lng: -3.6898,
+      images: [],
+      created_by: 'system',
+      created_at: '2026-01-01T00:00:00Z',
+    },
+  },
+  {
+    id: 'mock-2',
+    shopping_center_id: 'sc-2',
+    lister_id: 'user-1',
+    title: 'Stand de Marketing — Zona Central',
+    description: 'Ubicación estratégica en el pasillo central con altísimo tráfico peatonal.',
+    size_sqm: 25,
+    floor_level: 'ground',
+    rental_types: ['marketing'],
+    price_daily_marketing: 180,
+    available_from: '2026-06-01',
+    status: 'active',
+    images: ['/Assets/2.jpg'],
+    amenities: ['electricity', 'wifi'],
+    created_at: '2026-05-01T00:00:00Z',
+    updated_at: '2026-05-01T00:00:00Z',
+    shopping_center: {
+      id: 'sc-2',
+      name: 'La Maquinista',
+      city: 'Barcelona',
+      address: 'Carrer de Potosí, 2',
+      province: 'Barcelona',
+      postal_code: '08030',
+      country: 'ES',
+      lat: 41.4347,
+      lng: 2.1963,
+      images: [],
+      created_by: 'system',
+      created_at: '2026-01-01T00:00:00Z',
+    },
+  },
+  {
+    id: 'mock-3',
+    shopping_center_id: 'sc-3',
+    lister_id: 'user-1',
+    title: 'Galería Boutique — Entrada Principal',
+    description: 'Local con encanto en galería de lujo, perfecto para marcas lifestyle y moda.',
+    size_sqm: 55,
+    floor_level: 'ground',
+    rental_types: ['popup'],
+    price_daily_popup: 850,
+    available_from: '2026-06-01',
+    status: 'active',
+    images: ['/Assets/4.jpg'],
+    amenities: ['electricity', 'wifi', 'airConditioning', 'security', 'cctv'],
+    created_at: '2026-05-01T00:00:00Z',
+    updated_at: '2026-05-01T00:00:00Z',
+    shopping_center: {
+      id: 'sc-3',
+      name: 'Aqua Multiespacio',
+      city: 'Valencia',
+      address: 'Av. de Napoleón Bonaparte, 47',
+      province: 'Valencia',
+      postal_code: '46011',
+      country: 'ES',
+      lat: 39.4529,
+      lng: -0.3347,
+      images: [],
+      created_by: 'system',
+      created_at: '2026-01-01T00:00:00Z',
+    },
+  },
+  {
+    id: 'mock-4',
+    shopping_center_id: 'sc-4',
+    lister_id: 'user-1',
+    title: 'Local Comercial — Nivel 1',
+    description: 'Amplio local en posición de esquina con doble escaparate y gran afluencia.',
+    size_sqm: 85,
+    floor_level: 'first',
+    rental_types: ['long_term', 'popup'],
+    price_monthly: 2800,
+    price_daily_popup: 650,
+    available_from: '2026-06-01',
+    status: 'active',
+    images: ['/Assets/5.jpg'],
+    amenities: ['electricity', 'wifi', 'airConditioning', 'parking', 'elevator'],
+    created_at: '2026-05-01T00:00:00Z',
+    updated_at: '2026-05-01T00:00:00Z',
+    shopping_center: {
+      id: 'sc-4',
+      name: 'Parquesur',
+      city: 'Madrid',
+      address: 'Av. de los Castillos, s/n',
+      province: 'Madrid',
+      postal_code: '28916',
+      country: 'ES',
+      lat: 40.3301,
+      lng: -3.7852,
+      images: [],
+      created_by: 'system',
+      created_at: '2026-01-01T00:00:00Z',
+    },
+  },
+]
 
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
@@ -22,16 +153,26 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     <div className="flex flex-col min-h-screen bg-cream">
       <NavbarServer />
 
-      {/* ── Hero ── */}
-      <section className="pt-10 pb-6 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-ink leading-tight tracking-tight mb-4">
+      {/* ── Hero — full-bleed image ── */}
+      <section className="relative flex items-center justify-center min-h-[580px] px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <Image
+          src="/Assets/3.jpg"
+          alt="Shopping center interior"
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-ink/55" />
+
+        <div className="relative z-10 max-w-4xl w-full mx-auto text-center py-20">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight tracking-tight mb-4 drop-shadow-sm">
             {isEs
-              ? <>Encuentra tu espacio<br /><span className="text-forest">perfecto.</span></>
-              : <>Find your perfect<br /><span className="text-forest">space.</span></>
+              ? <>Encuentra tu espacio<br /><span className="text-forest-light">perfecto.</span></>
+              : <>Find your perfect<br /><span className="text-forest-light">space.</span></>
             }
           </h1>
-          <p className="text-base text-ink-muted max-w-xl mx-auto mb-7 leading-relaxed">
+          <p className="text-base text-white/80 max-w-xl mx-auto mb-7 leading-relaxed">
             {t('hero.subtitle')}
           </p>
 
@@ -39,7 +180,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
           <form
             action={`/${locale}/search`}
             method="GET"
-            className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full shadow-md border border-warm-border overflow-hidden max-w-2xl mx-auto"
+            className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full shadow-xl border border-warm-border overflow-hidden max-w-2xl mx-auto"
           >
             <div className="flex-1 flex items-center gap-3 px-5 py-3.5 sm:border-r border-warm-border">
               <MapPin className="h-4 w-4 text-ink-subtle flex-shrink-0" />
@@ -87,7 +228,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
               <Link
                 key={city}
                 href={`/${locale}/search?q=${city}`}
-                className="text-xs text-ink-muted hover:text-ink bg-white border border-warm-border hover:border-forest/30 px-3 py-1.5 rounded-full transition-all"
+                className="text-xs text-white/70 hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3 py-1.5 rounded-full transition-all backdrop-blur-sm"
               >
                 {city}
               </Link>
@@ -96,8 +237,36 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         </div>
       </section>
 
+      {/* ── Featured listings ── */}
+      <section className="py-14 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-8">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest text-ink-subtle mb-1">
+                {isEs ? 'Selección del mes' : 'This month\'s picks'}
+              </p>
+              <h2 className="text-2xl font-bold text-ink">
+                {isEs ? 'Espacios destacados' : 'Featured spaces'}
+              </h2>
+            </div>
+            <Link
+              href={`/${locale}/search`}
+              className="text-sm font-semibold text-forest hover:underline hidden sm:flex items-center gap-1"
+            >
+              {isEs ? 'Ver todos' : 'View all'} <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-8">
+            {MOCK_LISTINGS.map((listing) => (
+              <ListingCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Three rental types ── */}
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
+      <section className="py-8 px-4 sm:px-6 lg:px-8 bg-stone">
         <div className="max-w-7xl mx-auto">
           <p className="text-xs font-semibold uppercase tracking-widest text-ink-subtle text-center mb-3">
             {isEs ? 'Cómo funciona' : 'How it works'}
@@ -166,7 +335,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       </section>
 
       {/* ── Stats strip ── */}
-      <section className="py-10 px-4 sm:px-6 lg:px-8 bg-stone">
+      <section className="py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto grid grid-cols-3 gap-6 text-center">
           {[
             { number: '500+', label: isEs ? 'Espacios disponibles' : 'Available spaces' },
@@ -185,7 +354,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="relative bg-forest rounded-3xl overflow-hidden">
-            {/* Decorative circles */}
             <div className="absolute -top-16 -right-16 w-64 h-64 bg-forest-mid rounded-full opacity-40" />
             <div className="absolute -bottom-10 -left-10 w-48 h-48 bg-forest-mid rounded-full opacity-30" />
             <div className="relative px-10 py-14 md:px-16 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">

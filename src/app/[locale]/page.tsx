@@ -1,11 +1,12 @@
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Search, ArrowRight, Building2, Calendar, Megaphone, MapPin } from 'lucide-react'
+import { ArrowRight, Building2, Calendar, Megaphone } from 'lucide-react'
 import { NavbarServer } from '@/components/layout/NavbarServer'
 import { Footer } from '@/components/layout/Footer'
 import { LinkButton } from '@/components/ui/link-button'
 import { ListingCard } from '@/components/listings/ListingCard'
+import { HeroSearch } from '@/components/search/HeroSearch'
 import type { Listing } from '@/types'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
@@ -176,51 +177,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             {t('hero.subtitle')}
           </p>
 
-          {/* Search bar */}
-          <form
-            action={`/${locale}/search`}
-            method="GET"
-            className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full shadow-xl border border-warm-border overflow-hidden max-w-2xl mx-auto"
-          >
-            <div className="flex-1 flex items-center gap-3 px-5 py-3.5 sm:border-r border-warm-border">
-              <MapPin className="h-4 w-4 text-ink-subtle flex-shrink-0" />
-              <div className="text-left min-w-0">
-                <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-subtle">
-                  {isEs ? 'Ciudad o centro' : 'City or mall'}
-                </p>
-                <input
-                  name="q"
-                  placeholder={isEs ? 'Madrid, El Corte Inglés...' : 'Barcelona, La Maquinista...'}
-                  className="w-full text-sm text-ink bg-transparent outline-none placeholder:text-ink-subtle font-medium"
-                />
-              </div>
-            </div>
-
-            <div className="flex-shrink-0 flex items-center gap-3 px-5 py-3.5 sm:border-r border-warm-border">
-              <div className="text-left">
-                <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-subtle">
-                  {isEs ? 'Tipo' : 'Type'}
-                </p>
-                <select
-                  name="type"
-                  className="text-sm text-ink bg-transparent outline-none font-medium cursor-pointer appearance-none"
-                >
-                  <option value="">{isEs ? 'Todos' : 'All types'}</option>
-                  <option value="long_term">{isEs ? 'Largo plazo' : 'Long-term'}</option>
-                  <option value="popup">Pop-up</option>
-                  <option value="marketing">{isEs ? 'Marketing' : 'Marketing'}</option>
-                </select>
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="flex items-center justify-center gap-2 bg-forest hover:bg-forest-mid text-white font-semibold text-sm px-8 py-4 transition-colors flex-shrink-0"
-            >
-              <Search className="h-4 w-4" />
-              {t('hero.searchButton')}
-            </button>
-          </form>
+          {/* Search bar with autocomplete */}
+          <HeroSearch locale={locale} searchButtonLabel={t('hero.searchButton')} />
 
           {/* Quick city links */}
           <div className="flex flex-wrap justify-center gap-2 mt-4">

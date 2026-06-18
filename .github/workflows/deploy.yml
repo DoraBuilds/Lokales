@@ -20,3 +20,24 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: Smoke test — homepage responds
+        run: |
+          sleep 10
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://lokales.vercel.app)
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Smoke test FAILED — homepage returned $STATUS"
+            exit 1
+          fi
+          echo "Smoke test passed"
+
+      - name: Smoke test — search page responds
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://lokales.vercel.app/en/search)
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Smoke test FAILED — search page returned $STATUS"
+            exit 1
+          fi
+          echo "Smoke test passed"

@@ -1,9 +1,21 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useLocale } from 'next-intl'
-import { MapPin, Building2, ArrowRight } from 'lucide-react'
+import { MapPin, ArrowRight } from 'lucide-react'
 import type { ShoppingCenter } from '@/types'
+
+const MALL_FALLBACKS = [
+  '/Assets/michael-weidemann-oGhTfu1UrOY-unsplash.jpg',
+  '/Assets/vitaly-gariev-F7lIMuWQF4c-unsplash.jpg',
+  '/Assets/gigstore-C1BryewCOq0-unsplash.jpg',
+]
+
+function pickMallFallback(id: string): string {
+  const sum = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+  return MALL_FALLBACKS[sum % MALL_FALLBACKS.length]
+}
 
 interface MallCounts {
   total: number
@@ -33,20 +45,14 @@ export function MallCard({ mall, counts, href }: MallCardProps) {
   return (
     <Link href={href} className="group block bg-white rounded-3xl border border-warm-border hover:border-forest/30 hover:shadow-md transition-all overflow-hidden">
 
-      {/* Top section — mall image or gradient placeholder */}
-      <div className="relative h-40 bg-gradient-to-br from-forest-light to-stone overflow-hidden">
-        {mall.images?.[0] ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={mall.images[0]}
-            alt={mall.name}
-            className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <Building2 className="h-14 w-14 text-forest/20" />
-          </div>
-        )}
+      {/* Top section — mall image */}
+      <div className="relative h-40 bg-stone overflow-hidden">
+        <Image
+          src={mall.images?.[0] ?? pickMallFallback(mall.id)}
+          alt={mall.name}
+          fill
+          className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+        />
 
         {/* Center type badge */}
         {mall.center_type && (

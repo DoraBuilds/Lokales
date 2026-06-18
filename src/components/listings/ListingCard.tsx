@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale } from 'next-intl'
-import { MapPin, Heart, Maximize2 } from 'lucide-react'
+import { MapPin, Heart } from 'lucide-react'
 import { useState } from 'react'
 import { toggleSaveListing } from '@/lib/listing-actions'
 import type { Listing } from '@/types'
@@ -12,6 +12,20 @@ interface ListingCardProps {
   listing: Listing
   isSaved?: boolean
   onSave?: (id: string) => void
+}
+
+const FALLBACK_IMAGES = [
+  '/Assets/christian-wiediger-I8-T4lMCA6k-unsplash.jpg',
+  '/Assets/korie-cull-IzIME1jwjCY-unsplash.jpg',
+  '/Assets/charlesdeluvio-_4K7BwaHUGc-unsplash.jpg',
+  '/Assets/osarugue-igbinoba-nlfOuHQlO7c-unsplash.jpg',
+  '/Assets/christopher-john-SrXcncP6v4Q-unsplash.jpg',
+  '/Assets/richard-williams-bigmTFsEwoM-unsplash.jpg',
+]
+
+function pickFallback(id: string): string {
+  const sum = id.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0)
+  return FALLBACK_IMAGES[sum % FALLBACK_IMAGES.length]
 }
 
 const BADGE_STYLES: Record<string, string> = {
@@ -31,7 +45,7 @@ export function ListingCard({ listing, isSaved: initialSaved, onSave }: ListingC
   const [saved, setSaved] = useState(initialSaved ?? false)
   const [saving, setSaving] = useState(false)
 
-  const primaryImage = listing.images?.[0]
+  const primaryImage = listing.images?.[0] ?? pickFallback(listing.id)
   const primaryPrice = listing.price_monthly
     ? `€${listing.price_monthly.toLocaleString('es-ES')}${locale === 'es' ? '/mes' : '/mo'}`
     : listing.price_daily_popup
@@ -44,18 +58,12 @@ export function ListingCard({ listing, isSaved: initialSaved, onSave }: ListingC
     <Link href={`/${locale}/listings/${listing.id}`} className="group block">
       {/* Image container — full bleed, heavy radius */}
       <div className="relative aspect-[4/3] bg-stone rounded-3xl overflow-hidden mb-3">
-        {primaryImage ? (
-          <Image
-            src={primaryImage}
-            alt={listing.title}
-            fill
-            className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-stone">
-            <Maximize2 className="h-10 w-10 text-ink-subtle" />
-          </div>
-        )}
+        <Image
+          src={primaryImage}
+          alt={listing.title}
+          fill
+          className="object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
+        />
 
         {/* Rental type badges — floating top-left */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">

@@ -110,18 +110,18 @@ export default async function DashboardPage({
         )}
 
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <p className="text-xs font-semibold uppercase tracking-widest text-ink-subtle mb-1">
               {isEs ? 'Bienvenida de vuelta' : 'Welcome back'}
             </p>
-            <h1 className="text-3xl font-bold text-ink">
+            <h1 className="text-2xl sm:text-3xl font-bold text-ink">
               {firstName ? `${isEs ? 'Hola' : 'Hey'}, ${firstName} 👋` : isEs ? 'Tu panel' : 'Your dashboard'}
             </h1>
           </div>
           <LinkButton
             href={`/${locale}/listings/new`}
-            className="bg-forest hover:bg-forest-mid text-white font-semibold rounded-full px-5 py-2.5 text-sm inline-flex items-center gap-2"
+            className="self-start sm:self-auto bg-forest hover:bg-forest-mid text-white font-semibold rounded-full px-5 py-2.5 text-sm inline-flex items-center gap-2 flex-shrink-0"
           >
             <Plus className="h-4 w-4" />
             {isEs ? 'Nuevo espacio' : 'New listing'}
@@ -129,7 +129,7 @@ export default async function DashboardPage({
         </div>
 
         {/* Tabs */}
-        <div className="flex items-center gap-1 bg-white rounded-2xl border border-warm-border p-1.5 mb-8 w-fit">
+        <div className="flex items-center gap-1 bg-white rounded-2xl border border-warm-border p-1.5 mb-8 w-full sm:w-fit overflow-x-auto">
           {TABS.map(({ id, label, icon: Icon, count }) => (
             <Link
               key={id}

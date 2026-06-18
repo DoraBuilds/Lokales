@@ -84,7 +84,7 @@ export function HeroSearch({ locale, searchButtonLabel }: HeroSearchProps) {
         className="flex flex-col sm:flex-row items-stretch bg-white rounded-2xl sm:rounded-full shadow-xl border border-warm-border overflow-hidden"
       >
         {/* Location input */}
-        <div className="flex-1 flex items-center gap-3 px-5 py-3.5 sm:border-r border-warm-border">
+        <div className="flex-1 flex items-center gap-3 px-5 py-3.5 border-b sm:border-b-0 sm:border-r border-warm-border">
           <MapPin className="h-4 w-4 text-ink-subtle flex-shrink-0" />
           <div className="text-left min-w-0 w-full">
             <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-subtle">
@@ -107,7 +107,7 @@ export function HeroSearch({ locale, searchButtonLabel }: HeroSearchProps) {
         </div>
 
         {/* Type select */}
-        <div className="flex-shrink-0 flex items-center gap-3 px-5 py-3.5 sm:border-r border-warm-border">
+        <div className="flex-shrink-0 flex items-center gap-3 px-5 py-3.5 border-b sm:border-b-0 sm:border-r border-warm-border">
           <div className="text-left">
             <p className="text-[10px] font-semibold uppercase tracking-widest text-ink-subtle">
               {isEs ? 'Tipo' : 'Type'}

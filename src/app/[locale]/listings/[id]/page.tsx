@@ -131,37 +131,47 @@ export default async function ListingPage({
           </div>
         </div>
 
-        {/* ── Airbnb-style photo grid ── */}
+        {/* ── Photo grid ── */}
         {images.length > 0 ? (
           <div className="relative mb-8 rounded-3xl overflow-hidden">
             {images.length === 1 ? (
-              <div className="relative aspect-[16/7]">
+              <div className="relative aspect-[4/3] sm:aspect-[16/7]">
                 <Image src={images[0]} alt={listing.title} fill className="object-cover" priority />
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-2 h-[420px]">
-                {/* Large left image */}
-                <div className="relative">
+              <>
+                {/* Mobile: primary image only */}
+                <div className="relative aspect-[4/3] sm:hidden">
                   <Image src={images[0]} alt={listing.title} fill className="object-cover" priority />
-                </div>
-                {/* Right 2×2 grid */}
-                <div className={`grid gap-2 ${images.length >= 4 ? 'grid-rows-2 grid-cols-2' : images.length === 3 ? 'grid-rows-2 grid-cols-1' : 'grid-rows-1 grid-cols-1'}`}>
-                  {images.slice(1, 5).map((src: string, i: number) => (
-                    <div key={i} className="relative overflow-hidden">
-                      <Image src={src} alt="" fill className="object-cover" />
+                  {images.length > 1 && (
+                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-ink text-xs font-semibold px-3 py-1.5 rounded-full shadow">
+                      1 / {images.length}
                     </div>
-                  ))}
+                  )}
                 </div>
-              </div>
-            )}
-            {images.length > 5 && (
-              <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-ink text-xs font-semibold px-3 py-1.5 rounded-full shadow">
-                +{images.length - 5} photos
-              </div>
+                {/* SM+: multi-image grid */}
+                <div className={`hidden sm:grid grid-cols-2 gap-2 h-[280px] md:h-[380px] lg:h-[420px]`}>
+                  <div className="relative">
+                    <Image src={images[0]} alt={listing.title} fill className="object-cover" priority />
+                  </div>
+                  <div className={`grid gap-2 ${images.length >= 4 ? 'grid-rows-2 grid-cols-2' : images.length === 3 ? 'grid-rows-2 grid-cols-1' : 'grid-rows-1 grid-cols-1'}`}>
+                    {images.slice(1, 5).map((src: string, i: number) => (
+                      <div key={i} className="relative overflow-hidden">
+                        <Image src={src} alt="" fill className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {images.length > 5 && (
+                  <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm text-ink text-xs font-semibold px-3 py-1.5 rounded-full shadow hidden sm:block">
+                    +{images.length - 5} photos
+                  </div>
+                )}
+              </>
             )}
           </div>
         ) : (
-          <div className="aspect-[16/6] bg-stone rounded-3xl flex items-center justify-center mb-8">
+          <div className="aspect-[4/3] sm:aspect-[16/6] bg-stone rounded-3xl flex items-center justify-center mb-8">
             <Maximize2 className="h-10 w-10 text-ink-subtle" />
           </div>
         )}
@@ -169,7 +179,7 @@ export default async function ListingPage({
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
           {/* ── Left: main info ── */}
-          <div className="lg:col-span-2 space-y-8">
+          <div className="lg:col-span-2 space-y-8 order-2 lg:order-1">
 
             {/* Title + badges + location */}
             <div>
@@ -278,9 +288,9 @@ export default async function ListingPage({
             )}
           </div>
 
-          {/* ── Right: pricing + inquiry ── */}
-          <div className="space-y-4">
-            <div className="bg-white rounded-3xl border border-warm-border p-6 sticky top-24">
+          {/* ── Right: pricing + inquiry — first on mobile so contact is immediately visible ── */}
+          <div className="space-y-4 order-1 lg:order-2">
+            <div className="bg-white rounded-3xl border border-warm-border p-6 lg:sticky lg:top-24">
               <p className="text-xs font-semibold uppercase tracking-widest text-ink-subtle mb-4">
                 {isEs ? 'Precios' : 'Pricing'}
               </p>

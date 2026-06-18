@@ -3,9 +3,8 @@ import { NavbarServer } from '@/components/layout/NavbarServer'
 import { Footer } from '@/components/layout/Footer'
 import { ListingCard } from '@/components/listings/ListingCard'
 import { MallCard } from '@/components/listings/MallCard'
-import { SearchFilters } from '@/components/search/SearchFilters'
-import { Suspense } from 'react'
-import { SlidersHorizontal, ArrowLeft } from 'lucide-react'
+import { FiltersMobileWrapper } from '@/components/search/FiltersMobileWrapper'
+import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import type { Listing, ShoppingCenter } from '@/types'
 
@@ -192,15 +191,7 @@ export default async function SearchPage({ params, searchParams }: SearchPagePro
 
           {/* ── Sidebar ──────────────────────────────────────────────────── */}
           <aside className="w-full lg:w-64 flex-shrink-0">
-            <div className="bg-white rounded-3xl border border-warm-border p-6 sticky top-24">
-              <div className="flex items-center gap-2 mb-6">
-                <SlidersHorizontal className="h-4 w-4 text-forest" />
-                <p className="text-sm font-semibold text-ink">{isEs ? 'Filtros' : 'Filters'}</p>
-              </div>
-              <Suspense fallback={null}>
-                <SearchFilters locale={locale} />
-              </Suspense>
-            </div>
+            <FiltersMobileWrapper locale={locale} />
           </aside>
 
           {/* ── Main content ─────────────────────────────────────────────── */}

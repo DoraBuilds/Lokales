@@ -22,12 +22,14 @@ export interface MallSelectResult {
 interface Props {
   value: string
   scId: string
+  locale: string
   onChange: (name: string) => void
   onMallSelect: (result: MallSelectResult) => void
   hasError?: boolean
 }
 
-export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError }: Props) {
+export function MallAutocomplete({ value, scId, locale, onChange, onMallSelect, hasError }: Props) {
+  const isEs = locale === 'es'
   const [results, setResults]           = useState<MallSearchResult[]>([])
   const [showDropdown, setShowDropdown] = useState(false)
   const [loading, setLoading]           = useState(false)
@@ -141,7 +143,7 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
         <p className="flex-1 min-w-0 text-sm font-semibold text-ink truncate">{value}</p>
         <button type="button" onClick={handleClear}
           className="flex-shrink-0 text-xs text-ink-muted hover:text-ink font-medium px-2 py-1 rounded-lg hover:bg-white/60 transition-colors">
-          Change
+          {isEs ? 'Cambiar' : 'Change'}
         </button>
       </div>
     )
@@ -157,7 +159,7 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
           value={value}
           onChange={handleInputChange}
           onFocus={() => { if (results.length > 0 || value.trim().length >= 2) setShowDropdown(true) }}
-          placeholder="Search for your shopping center…"
+          placeholder={isEs ? 'Busca tu centro comercial…' : 'Search for your shopping center…'}
           className={inputCls}
           autoComplete="off"
         />
@@ -178,7 +180,7 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
           {/* No results message */}
           {results.length === 0 && !googleMode && (
             <p className="px-4 py-3 text-sm text-ink-muted border-b border-warm-border/50">
-              No malls found in our list.
+              {isEs ? 'No encontramos este centro en nuestra lista.' : 'No malls found in our list.'}
             </p>
           )}
 
@@ -199,7 +201,9 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
             <button type="button"
               onClick={() => { setGoogleMode(true); setGoogleQuery(value) }}
               className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-stone transition-colors">
-              <span className="text-sm text-ink-muted">Can't find your mall?</span>
+              <span className="text-sm text-ink-muted">
+                {isEs ? '¿No encuentras tu centro?' : "Can't find your mall?"}
+              </span>
               <ChevronRight className="h-3.5 w-3.5 text-ink-subtle" />
             </button>
           )}
@@ -207,7 +211,9 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
           {/* Google search inline expansion */}
           {googleMode && (
             <div className="px-4 py-3 bg-stone/60 border-t border-warm-border space-y-3">
-              <p className="text-xs font-semibold text-ink-subtle">Search on Google Maps</p>
+              <p className="text-xs font-semibold text-ink-subtle">
+                {isEs ? 'Buscar en Google Maps' : 'Search on Google Maps'}
+              </p>
 
               <div className="flex gap-2">
                 <input
@@ -219,7 +225,7 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
                     setGoogleError(null)
                   }}
                   onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleGoogleSearch() } }}
-                  placeholder="Mall name + city…"
+                  placeholder={isEs ? 'Nombre del centro + ciudad…' : 'Mall name + city…'}
                   autoFocus
                   className="flex-1 px-3 py-2 rounded-xl border border-warm-border bg-white text-sm text-ink placeholder:text-ink-subtle focus:outline-none focus:ring-2 focus:ring-forest/10 focus:border-forest/50 transition-colors"
                 />
@@ -245,8 +251,8 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
                   <button type="button" onClick={handleConfirmGoogle} disabled={adding}
                     className="w-full text-xs font-semibold bg-forest text-white px-3 py-2 rounded-lg hover:bg-forest-mid disabled:opacity-50 transition-colors flex items-center justify-center gap-1.5">
                     {adding
-                      ? <><Loader2 className="h-3 w-3 animate-spin" /> Adding…</>
-                      : <><Check className="h-3 w-3" /> Yes, this is my mall</>}
+                    ? <><Loader2 className="h-3 w-3 animate-spin" /> {isEs ? 'Añadiendo…' : 'Adding…'}</>
+                    : <><Check className="h-3 w-3" /> {isEs ? 'Sí, este es mi centro' : 'Yes, this is my mall'}</>}
                   </button>
                 </div>
               )}
@@ -256,15 +262,19 @@ export function MallAutocomplete({ value, scId, onChange, onMallSelect, hasError
                 <div className="flex items-start gap-2 p-3 bg-amber-50 rounded-xl border border-amber-200">
                   <AlertCircle className="h-3.5 w-3.5 text-amber-600 mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-amber-800">
-                    We couldn't find this mall on Google Maps. Please contact us at{' '}
-                    <span className="font-semibold">hello@lokales.es</span> and we'll add it manually.
+                    {isEs
+                      ? <>No encontramos este centro en Google Maps. Escríbenos a{' '}<span className="font-semibold">hello@lokales.es</span> y lo añadimos manualmente.</>
+                      : <>We couldn't find this mall on Google Maps. Please contact us at{' '}<span className="font-semibold">hello@lokales.es</span> and we'll add it manually.</>
+                    }
                   </p>
                 </div>
               )}
               {googleError === 'api_error' && (
                 <div className="flex items-start gap-2 p-3 bg-red-50 rounded-xl border border-red-200">
                   <AlertCircle className="h-3.5 w-3.5 text-red-500 mt-0.5 flex-shrink-0" />
-                  <p className="text-xs text-red-700">Something went wrong. Please try again.</p>
+                  <p className="text-xs text-red-700">
+                    {isEs ? 'Algo salió mal. Inténtalo de nuevo.' : 'Something went wrong. Please try again.'}
+                  </p>
                 </div>
               )}
             </div>

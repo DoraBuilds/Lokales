@@ -182,7 +182,9 @@ export function NewListingForm({ userId, locale }: { userId: string; locale: str
     const e: Record<string, string> = {}
     if (step === 1) {
       if (!form.scId)
-        e.scName = 'Please select your mall from the list or add it via "Can\'t find your mall?"'
+        e.scName = locale === 'es'
+          ? 'Selecciona tu centro de la lista o añádelo con "¿No encuentras tu centro?"'
+          : 'Please select your mall from the list or add it via "Can\'t find your mall?"'
     }
     if (step === 2) {
       if (!form.title.trim())       e.title       = 'Required'
@@ -328,6 +330,7 @@ export function NewListingForm({ userId, locale }: { userId: string; locale: str
               <MallAutocomplete
                 value={form.scName}
                 scId={form.scId ?? ''}
+                locale={locale}
                 onChange={(name) => set('scName', name)}
                 onMallSelect={(mall) => {
                   set('scId',      mall.id)

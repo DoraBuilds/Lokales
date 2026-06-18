@@ -27,19 +27,28 @@ create table public.profiles (
 create table public.shopping_centers (
   id          uuid default uuid_generate_v4() primary key,
   name        text not null,
-  address     text not null,
+  address     text not null default '',
   city        text not null,
   province    text not null,
-  postal_code text not null,
+  postal_code text,
   country     text not null default 'Spain',
   lat         double precision,
   lng         double precision,
   description text,
   website     text,
-  images      text[] default '{}',
+  images           text[] default '{}',
+  microlocation    text,
+  population       integer,
+  gla_sqm          numeric,
+  footfall_annual  integer,
+  shops_count      integer,
+  center_type      text,
+  year_opened      integer,
+  owner            text,
   created_by  uuid references public.profiles(id) on delete set null,
   created_at  timestamptz default now() not null,
-  updated_at  timestamptz default now() not null
+  updated_at  timestamptz default now() not null,
+  unique (name, city)
 );
 
 -- Individual spaces listed inside a shopping center
@@ -54,10 +63,14 @@ create table public.listings (
   ceiling_height        numeric,
   frontage_width        numeric,
   windows_count         integer,
+  gla_sqm               numeric,
+  facade_meters         numeric,
   rental_types          text[] not null default '{}',
-  price_monthly         numeric,
-  price_daily_popup     numeric,
-  price_daily_marketing numeric,
+  price_per_sqm              numeric,
+  price_monthly              numeric,
+  common_expenses_per_sqm    numeric,
+  price_daily_popup          numeric,
+  price_daily_marketing      numeric,
   min_days              integer default 1,
   max_days              integer default 365,
   available_from        date not null default current_date,
@@ -86,6 +99,17 @@ create table public.inquiries (
   created_at          timestamptz default now() not null
 );
 
+-- Province / autonomous-community stats (seeded from Excel Tab 2)
+create table public.province_stats (
+  id                   uuid default uuid_generate_v4() primary key,
+  autonomous_community text not null unique,
+  centers_count        integer,
+  total_sba_sqm        numeric,
+  total_shops_count    integer,
+  created_at           timestamptz default now() not null,
+  updated_at           timestamptz default now() not null
+);
+
 -- Spaces saved/favourited by users
 create table public.saved_listings (
   user_id    uuid references public.profiles(id) on delete cascade not null,
@@ -106,6 +130,11 @@ create index listings_available_from_idx     on public.listings(available_from);
 create index shopping_centers_city_idx       on public.shopping_centers(city);
 create index inquiries_listing_id_idx        on public.inquiries(listing_id);
 create index saved_listings_user_id_idx      on public.saved_listings(user_id);
+
+-- Full-text + trigram search on shopping centers
+create extension if not exists pg_trgm;
+create index shopping_centers_name_trgm_idx on public.shopping_centers using gin (name gin_trgm_ops);
+create index shopping_centers_city_trgm_idx on public.shopping_centers using gin (city gin_trgm_ops);
 
 
 -- ============================================================
@@ -156,6 +185,10 @@ create trigger set_updated_at_listings
   before update on public.listings
   for each row execute procedure public.handle_updated_at();
 
+create trigger set_updated_at_province_stats
+  before update on public.province_stats
+  for each row execute procedure public.handle_updated_at();
+
 
 -- ============================================================
 -- ROW LEVEL SECURITY (RLS)
@@ -167,6 +200,7 @@ alter table public.shopping_centers enable row level security;
 alter table public.listings        enable row level security;
 alter table public.inquiries       enable row level security;
 alter table public.saved_listings  enable row level security;
+alter table public.province_stats  enable row level security;
 
 -- Profiles
 create policy "Profiles are public"
@@ -182,11 +216,13 @@ create policy "Users can update their own profile"
 create policy "Shopping centers are public"
   on public.shopping_centers for select using (true);
 
-create policy "Logged-in users can add shopping centers"
-  on public.shopping_centers for insert with check (auth.uid() is not null);
-
+-- Inserts are service-role only (seeded via script; users use the Google Maps fallback flow)
 create policy "Creators can edit their shopping centers"
   on public.shopping_centers for update using (auth.uid() = created_by);
+
+-- Province stats
+create policy "Province stats are public"
+  on public.province_stats for select using (true);
 
 -- Listings
 create policy "Active listings are public"

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useLocale } from 'next-intl'
 import { MapPin, Heart, Maximize2 } from 'lucide-react'
+import { useState } from 'react'
+import { toggleSaveListing } from '@/lib/listing-actions'
 import type { Listing } from '@/types'
 
 interface ListingCardProps {
@@ -24,8 +26,10 @@ const TYPE_LABELS: Record<string, { en: string; es: string }> = {
   marketing: { en: 'Marketing', es: 'Marketing' },
 }
 
-export function ListingCard({ listing, isSaved, onSave }: ListingCardProps) {
+export function ListingCard({ listing, isSaved: initialSaved, onSave }: ListingCardProps) {
   const locale = useLocale() as 'en' | 'es'
+  const [saved, setSaved] = useState(initialSaved ?? false)
+  const [saving, setSaving] = useState(false)
 
   const primaryImage = listing.images?.[0]
   const primaryPrice = listing.price_monthly
@@ -67,15 +71,23 @@ export function ListingCard({ listing, isSaved, onSave }: ListingCardProps) {
 
         {/* Save button — floating top-right */}
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault()
-            onSave?.(listing.id)
+            if (onSave) {
+              onSave(listing.id)
+            } else {
+              setSaving(true)
+              const result = await toggleSaveListing(listing.id)
+              setSaved(result.saved)
+              setSaving(false)
+            }
           }}
-          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+          disabled={saving}
+          className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-sm hover:bg-white transition-colors disabled:opacity-60"
         >
           <Heart
             className={`h-4 w-4 transition-colors ${
-              isSaved ? 'fill-red-500 stroke-red-500' : 'stroke-ink-muted'
+              saved ? 'fill-red-500 stroke-red-500' : 'stroke-ink-muted'
             }`}
           />
         </button>

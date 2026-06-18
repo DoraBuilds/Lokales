@@ -27,28 +27,25 @@ export async function signup(formData: FormData) {
   const companyName = formData.get('company_name') as string
   const locale      = (formData.get('locale')      as string) || 'en'
 
-  const supabase = await createClient()
-  const { data, error } = await supabase.auth.signUp({
+  // Create user via admin client — already confirmed, no email sent
+  const admin = createAdminClient()
+  const { error: createError } = await admin.auth.admin.createUser({
     email,
     password,
-    options: { data: { name, company_name: companyName || null } },
+    email_confirm: true,
+    user_metadata: { name, company_name: companyName || null },
   })
 
-  if (error) {
-    redirect(`/${locale}/auth/signup?error=${encodeURIComponent(error.message)}`)
+  if (createError) {
+    redirect(`/${locale}/auth/signup?error=${encodeURIComponent(createError.message)}`)
   }
 
-  // If Supabase requires email confirmation, auto-confirm via admin client
-  // so users never need to check their inbox
-  if (!data.session && data.user) {
-    const admin = createAdminClient()
-    await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true })
+  // Sign them in immediately
+  const supabase = await createClient()
+  const { error: loginError } = await supabase.auth.signInWithPassword({ email, password })
 
-    // Now sign them in directly
-    const { error: loginError } = await supabase.auth.signInWithPassword({ email, password })
-    if (loginError) {
-      redirect(`/${locale}/auth/login?error=${encodeURIComponent(loginError.message)}`)
-    }
+  if (loginError) {
+    redirect(`/${locale}/auth/login?error=${encodeURIComponent(loginError.message)}`)
   }
 
   redirect(`/${locale}/dashboard`)

@@ -42,24 +42,19 @@ export function Navbar({ user }: NavbarProps) {
             <span className="text-xl font-bold tracking-tight text-forest">Lokales</span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href={`/${locale}/search`}
-              className="text-sm font-medium text-ink-muted hover:text-ink transition-colors"
-            >
-              {t('search')}
-            </Link>
-            <Link
-              href={`/${locale}/listings/new`}
-              className="text-sm font-medium text-ink-muted hover:text-ink transition-colors"
-            >
-              {t('listSpace')}
-            </Link>
-          </nav>
+          {/* Desktop nav — intentionally empty; CTA is in the right cluster */}
+          <nav className="hidden md:flex items-center" />
 
           {/* Right side */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
+
+            {/* List a space CTA */}
+            <LinkButton
+              href={`/${locale}/listings/new`}
+              className="hidden md:inline-flex bg-forest hover:bg-forest-mid text-white font-semibold rounded-full px-5 py-2 text-sm items-center gap-1.5"
+            >
+              {t('listSpace')}
+            </LinkButton>
 
             {/* Language switcher */}
             <DropdownMenu>
@@ -124,12 +119,12 @@ export function Navbar({ user }: NavbarProps) {
               </SheetTrigger>
               <SheetContent side="right" className="w-72 bg-cream">
                 <div className="flex flex-col gap-1 mt-10 px-2">
-                  <Link href={`/${locale}/search`} className="text-base font-medium py-3 px-3 rounded-xl hover:bg-stone transition-colors">
-                    {t('search')}
-                  </Link>
-                  <Link href={`/${locale}/listings/new`} className="text-base font-medium py-3 px-3 rounded-xl hover:bg-stone transition-colors">
+                  <LinkButton
+                    href={`/${locale}/listings/new`}
+                    className="justify-center bg-forest hover:bg-forest-mid text-white rounded-full font-semibold py-3 text-sm mb-2"
+                  >
                     {t('listSpace')}
-                  </Link>
+                  </LinkButton>
                   {user ? (
                     <>
                       <Link href={`/${locale}/dashboard`} className="text-base font-medium py-3 px-3 rounded-xl hover:bg-stone transition-colors">

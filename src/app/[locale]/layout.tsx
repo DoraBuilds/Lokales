@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages } from 'next-intl/server'
+import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { CookieBanner } from '@/components/layout/CookieBanner'
 import '../globals.css'
 
 const jakarta = Plus_Jakarta_Sans({
@@ -30,6 +31,8 @@ export default async function LocaleLayout({
     notFound()
   }
 
+  setRequestLocale(locale)
+
   const messages = await getMessages()
 
   return (
@@ -37,6 +40,7 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col bg-cream text-ink antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
+          <CookieBanner />
         </NextIntlClientProvider>
       </body>
     </html>

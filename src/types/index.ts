@@ -35,14 +35,22 @@ export interface ShoppingCenter {
   name: string
   address: string
   city: string
+  microlocation?: string
   province: string
-  postal_code: string
+  postal_code?: string
   country: string
-  lat: number
-  lng: number
+  lat?: number
+  lng?: number
   description?: string
   website?: string
   images: string[]
+  population?: number
+  gla_sqm?: number
+  footfall_annual?: number
+  shops_count?: number
+  center_type?: string
+  year_opened?: number
+  owner?: string
   created_by: string
   created_at: string
 }
@@ -56,17 +64,26 @@ export interface Listing {
   title: string
   description: string
   size_sqm: number
+  gla_sqm?: number
   floor_level: FloorLevel
   ceiling_height?: number
+  facade_meters?: number
   frontage_width?: number
   windows_count?: number
   rental_types: RentalType[]
+  price_per_sqm?: number
   price_monthly?: number
+  utilities_monthly?: number
+  long_term_notes?: string
   price_daily_popup?: number
+  popup_price_unit?: 'hour' | 'day' | 'week'
   price_daily_marketing?: number
+  marketing_price_unit?: 'day' | 'week' | 'month'
+  common_expenses_per_sqm?: number
   min_days?: number
   max_days?: number
   available_from: string
+  available_until?: string
   status: ListingStatus
   images: string[]
   amenities: Amenity[]

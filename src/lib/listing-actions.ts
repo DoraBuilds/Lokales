@@ -1,7 +1,6 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
-import { createAdminClient } from '@/lib/supabase/admin'
 
 export interface ListingFormData {
   // Shopping center
@@ -57,34 +56,23 @@ export async function createListing(
 
   if (!user) return { error: 'Not authenticated — please log in and try again.' }
 
-  // If a known SC was selected from the database, use it directly
-  let scRecordId = data.scId || ''
-
-  if (!scRecordId) {
-    // Create a new shopping center via admin client (bypasses RLS)
-    const admin = createAdminClient()
-    const { data: sc, error: scError } = await admin
-      .from('shopping_centers')
-      .insert({
-        name:            data.scName,
-        city:            data.scCity,
-        microlocation:   data.scMicrolocation || null,
-        province:        data.scProvince,
-        postal_code:     data.scPostalCode || null,
-        address:         data.scAddress || '',
-        lat:             num(data.scLat),
-        lng:             num(data.scLng),
-        population:      num(data.scPopulation),
-        gla_sqm:         num(data.scGlaSqm),
-        footfall_annual: num(data.scFootfallAnnual),
-        created_by:      user.id,
-      })
-      .select('id')
-      .single()
-
-    if (scError) return { error: `Shopping center error: ${scError.message}` }
-    scRecordId = sc.id
+  // scId is required — all mall creation goes through confirmAndAddMall
+  // which validates the Google place_id server-side before writing to the DB.
+  if (!data.scId) {
+    return { error: 'Please select your shopping center from the list, or use "Can\'t find your mall?" to add it.' }
   }
+
+  // Verify the SC exists and is readable by the anon role (public select policy)
+  const { data: scCheck, error: scCheckError } = await supabase
+    .from('shopping_centers')
+    .select('id')
+    .eq('id', data.scId)
+    .single()
+  if (scCheckError || !scCheck) {
+    return { error: 'Shopping center not found. Please re-select your mall.' }
+  }
+
+  const scRecordId = data.scId
 
   const availableFrom = data.availableFromImmediate
     ? new Date().toISOString().split('T')[0]

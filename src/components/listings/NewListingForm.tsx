@@ -181,10 +181,8 @@ export function NewListingForm({ userId, locale }: { userId: string; locale: str
   function validate(): boolean {
     const e: Record<string, string> = {}
     if (step === 1) {
-      if (!form.scName.trim())     e.scName     = 'Required'
-      if (!form.scCity.trim())     e.scCity     = 'Required'
-      if (!form.scProvince.trim()) e.scProvince = 'Required'
-      if (!form.scAddress.trim())  e.scAddress  = 'Required'
+      if (!form.scId)
+        e.scName = 'Please select your mall from the list or add it via "Can\'t find your mall?"'
     }
     if (step === 2) {
       if (!form.title.trim())       e.title       = 'Required'
